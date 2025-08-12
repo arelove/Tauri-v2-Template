@@ -14,10 +14,11 @@ A cross-platform desktop application template built with Tauri, React, TypeScrip
 - **Smooth Scrolling**: Powered by `smooth-scrollbar`.
 - **System Tray**: Seamless integration for quick access.
 
-## 📸 Screenshots
+## 📸 Assets
 
 ![Main Window](pictures/Main.png)
 
+https://github.com/user-attachments/assets/6484725e-61c2-4830-9500-3ddb1a924f1b
 
 ## 🚀 Getting Started
 
