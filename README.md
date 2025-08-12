@@ -1,6 +1,7 @@
 # Tauri Template
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/arelove/Tauri-v2-Template)![GitHub license](https://img.shields.io/github/license/arelove/Tauri-v2-Template)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/arelove/Tauri-v2-Template)
+![GitHub license](https://img.shields.io/github/license/arelove/Tauri-v2-Template)
 
 A cross-platform desktop application template built with Tauri, React, TypeScript, and Material-UI. This template provides a modern UI with internationalization, theme switching, and system tray integration.
 
