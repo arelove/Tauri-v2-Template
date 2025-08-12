@@ -68,7 +68,7 @@ tauri-template/
 ├── src/                # React frontend code
 ├── src-tauri/          # Tauri backend (Rust)
 ├── public/             # Static assets
-├── screenshots/        # Screenshots for README
+├── pictures/           # Pictures for README
 └── README.md
 ```
 
