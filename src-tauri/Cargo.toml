@@ -2,7 +2,7 @@
 name = "tauri-template"
 version = "0.1.0"
 description = "A Tauri App"
-authors = ["Ar3love"]
+authors = ["ar3love"]
 edition = "2021"
 
 
@@ -18,6 +18,7 @@ tauri = { version = "2.0.0", features = [ "macos-private-api", "tray-icon", "ima
 tauri-plugin-opener = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+tauri-plugin-devtools = "2.0.1"
 
 network-interface = "2.0.3"
 reqwest = { version = "0.12.22", features = ["json"] }

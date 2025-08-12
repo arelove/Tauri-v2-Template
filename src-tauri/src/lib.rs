@@ -68,14 +68,14 @@ fn setup_window_event_handler(app: &tauri::App) -> tauri::Result<()> {
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    let builder = tauri::Builder::default()
+    let mut builder = tauri::Builder::default()
         .plugin(tauri_plugin_window_state::Builder::default().build())
         .plugin(tauri_plugin_opener::Builder::default().build());
 
-    // #[cfg(debug_assertions)]
-    // {
-    //     builder = builder.plugin(tauri_plugin_devtools::init());
-    // }
+    #[cfg(debug_assertions)]
+    {
+        builder = builder.plugin(tauri_plugin_devtools::init());
+    }
 
     builder
         .setup(|app| {
