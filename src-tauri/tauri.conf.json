@@ -1,0 +1,145 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "tauri-template",
+  "version": "0.1.0",
+  "identifier": "com.tauri-app.tauri-template",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist",
+    "removeUnusedCommands": true
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Tauri Template",
+        "width": 800,
+        "height": 600,
+        "decorations": false,
+        "transparent": true,
+        "shadow": true,
+        "resizable": true,
+        "minWidth": 593,
+        "minHeight": 370,
+        "skipTaskbar": false,
+        "windowEffects": {
+          "effects": ["mica"],
+          "state": "followsWindowActiveState"
+        },
+        "center": true,
+        "maxWidth": null,
+        "maxHeight": null,
+        "fullscreen": false,
+        "alwaysOnTop": false,
+        "minimizable": true,
+        "maximizable": true,
+        "closable": true,
+        "visible": true,
+        "contentProtected": false,
+        "userAgent": null,
+        "additionalBrowserArgs": null,
+        "visibleOnAllWorkspaces": false,
+        "zoomHotkeysEnabled": false,
+        "backgroundColor": "#1a0033"
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self' 'unsafe-inline' data: blob:; img-src * data:; media-src *; script-src 'self' 'unsafe-eval'",
+      "freezePrototype": true,
+      "assetProtocol": {
+        "enable": false,
+        "scope": []
+      },
+      "capabilities": [],
+      "dangerousDisableAssetCspModification": false,
+      "pattern": {
+        "use": "brownfield"
+      }
+    },
+    "macOSPrivateApi": true,
+    "trayIcon": {
+      "id": "main",
+      "iconPath": "icons/icon.png",
+      "iconAsTemplate": true
+    },
+    "withGlobalTauri": true
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["deb", "appimage", "rpm", "nsis", "msi", "app", "dmg"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "webviewInstallMode": {
+        "type": "offlineInstaller",
+        "silent": true
+      },
+      "wix": {
+        "language": ["en-US", "ru-RU"],
+        "bannerPath": null,
+        "dialogImagePath": null,
+        "enableElevatedUpdateTask": false,
+        "componentRefs": [],
+        "componentGroupRefs": [],
+        "featureRefs": [],
+        "featureGroupRefs": [],
+        "fragmentPaths": [],
+        "mergeRefs": [],
+        "template": null,
+        "upgradeCode": null,
+        "version": null
+      },
+      "allowDowngrades": true,
+      "certificateThumbprint": null,
+      "digestAlgorithm": null,
+      "nsis": null,
+      "signCommand": null,
+      "timestampUrl": null,
+      "tsp": false
+    },
+    "macOS": {
+      "minimumSystemVersion": "10.13",
+      "dmg": {
+        "appPosition": {
+          "x": 180,
+          "y": 170
+        },
+        "applicationFolderPosition": {
+          "x": 480,
+          "y": 170
+        },
+        "windowSize": {
+          "height": 400,
+          "width": 660
+        }
+      },
+      "files": {},
+      "hardenedRuntime": true
+    },
+    "linux": {
+      "appimage": {
+        "bundleMediaFramework": false,
+        "files": {}
+      },
+      "deb": {
+        "files": {}
+      },
+      "rpm": {
+        "epoch": 0,
+        "files": {},
+        "release": "1"
+      }
+    }
+  },
+  "plugins": {
+    "window-state": null,
+    "system-tray": {}
+  }
+}
