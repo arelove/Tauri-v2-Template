@@ -18,7 +18,6 @@ A cross-platform desktop application template built with Tauri, React, TypeScrip
 
 ![Main Window](pictures/Main.png)
 
-![GIF Description](pictures/gif.gif)
 
 ## 🚀 Getting Started
 
