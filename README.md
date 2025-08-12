@@ -1,6 +1,8 @@
 # Tauri Template
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/your-username/tauri-template)![GitHub license](https://img.shields.io/github/license/your-username/tauri-template)A cross-platform desktop application template built with Tauri, React, TypeScript, and Material-UI. This template provides a modern UI with internationalization, theme switching, and system tray integration.
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/your-username/tauri-template)![GitHub license](https://img.shields.io/github/license/your-username/tauri-template)
+
+A cross-platform desktop application template built with Tauri, React, TypeScript, and Material-UI. This template provides a modern UI with internationalization, theme switching, and system tray integration.
 
 ## ✨ Features
 
