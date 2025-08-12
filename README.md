@@ -13,9 +13,7 @@
 
 ## 📸 Screenshots
 
-![Main Window](screenshots/main-window.png)
-
-![Network Dialog](screenshots/network-dialog.png)*Main application window and network status dialog*
+![Main Window](pictures/Main.png)
 
 ## 🚀 Getting Started
 

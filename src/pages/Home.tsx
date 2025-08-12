@@ -15,7 +15,7 @@ const Home: React.FC = () => {
 
   return (
     <AnimatedPage title={t('welcome')}>
-      <Box component="form" onSubmit={(e) => { e.preventDefault(); handleGreet(); }} sx={{ my: 2, bgcolor: 'transparent' }}>
+      <Box component="form" onSubmit={(e) => { e.preventDefault(); handleGreet(); }} sx={{ my: 2, bgcolor: 'transparent', textAlign: 'center' }}>
         <TextField
           id="greet-input"
           value={name}
