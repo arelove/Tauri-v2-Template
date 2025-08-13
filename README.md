@@ -34,7 +34,7 @@ https://github.com/user-attachments/assets/6484725e-61c2-4830-9500-3ddb1a924f1b
 
    ```bash
    git clone https://github.com/your-username/tauri-template.git
-   cd tauri-template
+   cd Tauri-v2-Template
    ```
 
 2. Install dependencies:
