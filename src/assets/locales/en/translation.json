@@ -73,5 +73,10 @@
   "titlebar.networkDetails.unknown": "Unknown",
   "titlebar.networkDetails.yes": "Yes",
   "titlebar.networkDetails.no": "No",
-  "titlebar.networkDetails.error": "Failed to fetch network details"
+  "titlebar.networkDetails.error": "Failed to fetch network details",
+
+  "settings.themeName": "Theme Name",
+  "settings.saveTheme": "Save Theme",
+  "settings.themeNameRequired": "Theme name is required",
+  "settings.themeNameExists": "Theme name already exists"
 }

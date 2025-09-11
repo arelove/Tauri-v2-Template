@@ -3,10 +3,11 @@ import { createTheme, ThemeProvider, PaletteMode } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 
 // Export ThemeMode type
-export type ThemeMode = 'light' | 'dark' | 'custom';
+export type ThemeMode = 'light' | 'dark' | string; // Allow string for named custom themes
 
 // Export CustomTheme interface
 export interface CustomTheme {
+  name: string;
   primary: string;
   backgroundDefault: string;
   backgroundPaper: string;
@@ -20,10 +21,14 @@ export const ThemeContext = createContext<{
   toggleTheme: (newMode: ThemeMode) => void;
   customTheme: CustomTheme;
   updateCustomTheme: (updates: Partial<CustomTheme>) => void;
+  customThemes: CustomTheme[];
+  saveCustomTheme: (name: string) => void;
+  deleteCustomTheme: (name: string) => void;
 }>({
   mode: 'light',
   toggleTheme: () => {},
   customTheme: {
+    name: 'custom',
     primary: '#ff00ff',
     backgroundDefault: '#1a0033',
     backgroundPaper: '#2a0044',
@@ -31,6 +36,9 @@ export const ThemeContext = createContext<{
     textSecondary: '#cccccc',
   },
   updateCustomTheme: () => {},
+  customThemes: [],
+  saveCustomTheme: () => {},
+  deleteCustomTheme: () => {},
 });
 
 const ThemeProviderWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -42,12 +50,17 @@ const ThemeProviderWrapper: React.FC<{ children: React.ReactNode }> = ({ childre
     return saved
       ? JSON.parse(saved)
       : {
+          name: 'custom',
           primary: '#ff00ff',
           backgroundDefault: '#1a0033',
           backgroundPaper: '#2a0044',
           textPrimary: '#ffffff',
           textSecondary: '#cccccc',
         };
+  });
+  const [customThemes, setCustomThemes] = useState<CustomTheme[]>(() => {
+    const saved = localStorage.getItem('customThemes');
+    return saved ? JSON.parse(saved) : [];
   });
 
   useEffect(() => {
@@ -58,14 +71,53 @@ const ThemeProviderWrapper: React.FC<{ children: React.ReactNode }> = ({ childre
     localStorage.setItem('customTheme', JSON.stringify(customTheme));
   }, [customTheme]);
 
-  const toggleTheme = (newMode: ThemeMode) => setMode(newMode);
+  useEffect(() => {
+    localStorage.setItem('customThemes', JSON.stringify(customThemes));
+  }, [customThemes]);
+
+  const toggleTheme = (newMode: ThemeMode) => {
+    setMode(newMode);
+    if (newMode !== 'light' && newMode !== 'dark' && newMode !== 'custom') {
+      const selectedTheme = customThemes.find((theme) => theme.name === newMode);
+      if (selectedTheme) {
+        setCustomTheme(selectedTheme);
+      }
+    }
+  };
 
   const updateCustomTheme = (updates: Partial<CustomTheme>) => {
     setCustomTheme((prev) => ({ ...prev, ...updates }));
   };
 
+  const saveCustomTheme = (name: string) => {
+    if (!name.trim()) {
+      return; // Prevent empty names
+    }
+    if (customThemes.some((theme) => theme.name === name)) {
+      return; // Prevent duplicate names
+    }
+    const newTheme = { ...customTheme, name };
+    setCustomThemes((prev) => [...prev, newTheme]);
+    setMode(name); // Switch to the newly saved theme
+  };
+
+  const deleteCustomTheme = (name: string) => {
+    if (mode === name) {
+      setMode('custom'); // Revert to default custom mode if deleting active theme
+      setCustomTheme({
+        name: 'custom',
+        primary: '#ff00ff',
+        backgroundDefault: '#1a0033',
+        backgroundPaper: '#2a0044',
+        textPrimary: '#ffffff',
+        textSecondary: '#cccccc',
+      });
+    }
+    setCustomThemes((prev) => prev.filter((theme) => theme.name !== name));
+  };
+
   const theme = useMemo(() => {
-    const paletteMode: PaletteMode = mode === 'custom' ? 'dark' : mode;
+    const paletteMode: PaletteMode = mode === 'light' || mode === 'dark' ? mode : 'dark';
     return createTheme({
       palette: {
         mode: paletteMode,
@@ -81,8 +133,9 @@ const ThemeProviderWrapper: React.FC<{ children: React.ReactNode }> = ({ childre
           background: { default: '#18181B', paper: '#27272A' }, // Obsidian-like dark
           text: { primary: '#F4F4F5', secondary: '#A1A1AA' }, // Obsidian text
         }),
-        ...(mode === 'custom' && {
+        ...(mode !== 'light' && mode !== 'dark' && {
           primary: { main: customTheme.primary },
+          secondary: { main: customTheme.primary },
           background: {
             default: customTheme.backgroundDefault,
             paper: customTheme.backgroundPaper,
@@ -189,7 +242,7 @@ const ThemeProviderWrapper: React.FC<{ children: React.ReactNode }> = ({ childre
   }, [mode, customTheme]);
 
   return (
-    <ThemeContext.Provider value={{ mode, toggleTheme, customTheme, updateCustomTheme }}>
+    <ThemeContext.Provider value={{ mode, toggleTheme, customTheme, updateCustomTheme, customThemes, saveCustomTheme, deleteCustomTheme }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {children}

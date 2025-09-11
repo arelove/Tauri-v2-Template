@@ -73,5 +73,10 @@
   "titlebar.networkDetails.unknown": "Неизвестно",
   "titlebar.networkDetails.yes": "Да",
   "titlebar.networkDetails.no": "Нет",
-  "titlebar.networkDetails.error": "Не удалось получить данные о сети"
+  "titlebar.networkDetails.error": "Не удалось получить данные о сети",
+
+  "settings.themeName": "Название темы",
+  "settings.saveTheme": "Сохранить тему",
+  "settings.themeNameRequired": "Название темы обязательно",
+  "settings.themeNameExists": "Название темы уже существует"
 }

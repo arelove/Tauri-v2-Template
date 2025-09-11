@@ -1,14 +1,33 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
-import { Box, Typography, Select, MenuItem, FormControl, InputLabel, Card, CardContent, Tooltip } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Card,
+  CardContent,
+  Tooltip,
+  IconButton,
+  TextField
+} from '@mui/material';
+import SaveIcon from '@mui/icons-material/Save';
+import CloseIcon from '@mui/icons-material/Close';
 import { ThemeContext } from '../context/ThemeContext';
 
 const Settings: React.FC = () => {
   const { t, i18n } = useTranslation();
-  const { mode, toggleTheme, customTheme, updateCustomTheme } = useContext(ThemeContext);
+
+  const { mode, toggleTheme, customTheme, updateCustomTheme, 
+          customThemes, saveCustomTheme, deleteCustomTheme } = useContext(ThemeContext);
+
   const colorInputRef = useRef<HTMLInputElement>(null);
   const currentFieldRef = useRef<keyof typeof customTheme | null>(null);
+  const [themeName, setThemeName] = useState('');
+  const [themeError, setThemeError] = useState('');
 
   useEffect(() => {
     localStorage.setItem('language', i18n.language);
@@ -26,6 +45,25 @@ const Settings: React.FC = () => {
     if (currentFieldRef.current) {
       updateCustomTheme({ [currentFieldRef.current]: e.target.value });
     }
+  };
+
+  const handleSaveTheme = () => {
+    if (!themeName.trim()) {
+      setThemeError(t('settings.themeNameRequired'));
+      return;
+    }
+    if (customThemes.some((theme) => theme.name === themeName)) {
+      setThemeError(t('settings.themeNameExists'));
+      return;
+    }
+    saveCustomTheme(themeName);
+    setThemeName('');
+    setThemeError('');
+  };
+
+  const handleDeleteTheme = (name: string) => (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent selecting the theme when clicking delete
+    deleteCustomTheme(name);
   };
 
   const animationVariants: Variants = {
@@ -159,16 +197,28 @@ const Settings: React.FC = () => {
                     <MenuItem value="light">Light (Apple)</MenuItem>
                     <MenuItem value="dark">Dark (Obsidian)</MenuItem>
                     <MenuItem value="custom">Custom</MenuItem>
+                    {customThemes.map((theme) => (
+                      <MenuItem key={theme.name} value={theme.name} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span>{theme.name}</span>
+                        <IconButton
+                          size="small"
+                          onClick={handleDeleteTheme(theme.name)}
+                          sx={{ ml: 1, visibility: mode === theme.name ? 'hidden' : 'visible' }}
+                        >
+                          <CloseIcon fontSize="small" />
+                        </IconButton>
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
 
-                {mode === 'custom' && (
+                {(mode === 'custom' || customThemes.some((t) => t.name === mode)) && (
                   <motion.div
                     variants={animationVariants}
                     initial="hidden"
                     animate="visible"
                     exit="exit"
-                    transition={{ delay: 0.2 }}
+                    transition={{ delay: 0.3 }}
                     style={{ flexGrow: 1 }}
                   >
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 2, justifyContent: 'flex-start' }}>
@@ -180,10 +230,7 @@ const Settings: React.FC = () => {
                         { label: t('customTheme.textSecondary'), field: 'textSecondary', value: customTheme.textSecondary },
                       ].map((item) => (
                         <Tooltip key={item.field} title={item.label} placement="top">
-                          <motion.div
-                            whileHover={{ scale: 1.2 }}
-                            whileTap={{ scale: 0.8 }}
-                          >
+                          <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.8 }}>
                             <Box
                               onClick={handleColorClick(item.field as keyof typeof customTheme)}
                               sx={{
@@ -195,14 +242,44 @@ const Settings: React.FC = () => {
                                 borderColor: 'divider',
                                 cursor: 'pointer',
                                 transition: 'border-color 0.2s ease',
-                                '&:hover': {
-                                  borderColor: 'primary.main',
-                                },
+                                '&:hover': { borderColor: 'primary.main' },
                               }}
                             />
                           </motion.div>
                         </Tooltip>
                       ))}
+                    </Box>
+                    <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+                      <TextField
+                        label={t('settings.themeName')}
+                        value={themeName}
+                        onChange={(e) => {
+                          setThemeName(e.target.value);
+                          setThemeError('');
+                        }}
+                        size="small"
+                        sx={{ maxWidth: 200 }}
+                        error={!!themeError}
+                        helperText={themeError}
+                      />
+                      <Tooltip title={t('settings.saveTheme')}>
+                        <IconButton
+                          onClick={handleSaveTheme}
+                          sx={{
+                            bgcolor: mode === 'custom' || customThemes.some((t) => t.name === mode)
+                              ? customTheme.primary
+                              : 'primary.main',
+                            color: 'white',
+                            '&:hover': {
+                              bgcolor: mode === 'custom' || customThemes.some((t) => t.name === mode)
+                                ? `${customTheme.primary}cc`
+                                : 'primary.dark',
+                            },
+                          }}
+                        >
+                          <SaveIcon />
+                        </IconButton>
+                      </Tooltip>
                     </Box>
                   </motion.div>
                 )}
