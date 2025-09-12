@@ -36,13 +36,13 @@
         "minimizable": true,
         "maximizable": true,
         "closable": true,
-        "visible": true,
+        "visible": false,
         "contentProtected": false,
         "userAgent": null,
         "additionalBrowserArgs": null,
         "visibleOnAllWorkspaces": false,
-        "zoomHotkeysEnabled": false,
-        "backgroundColor": "#1a0033"
+        "zoomHotkeysEnabled": false
+        
       }
     ],
     "security": {
