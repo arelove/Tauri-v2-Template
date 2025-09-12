@@ -36,7 +36,7 @@
         "minimizable": true,
         "maximizable": true,
         "closable": true,
-        "visible": false,
+        "visible": true,
         "contentProtected": false,
         "userAgent": null,
         "additionalBrowserArgs": null,
