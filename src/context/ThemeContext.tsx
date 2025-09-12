@@ -183,6 +183,38 @@ const ThemeProviderWrapper: React.FC<{ children: React.ReactNode }> = ({ childre
               font-family: 'JetBrains Mono', monospace;
               transition: background-color 0.4s ease;
             }
+            ::selection {
+              background: ${
+                mode === 'light'
+                  ? '#007AFF99' // Apple blue with opacity
+                  : mode === 'dark'
+                  ? '#c304d199' // Google blue with opacity
+                  : `${customTheme.primary}99` // Custom theme primary with opacity
+              };
+              color: ${
+                mode === 'light'
+                  ? '#1D1D1F' // Apple text primary
+                  : mode === 'dark'
+                  ? '#F4F4F5' // Obsidian text primary
+                  : customTheme.textPrimary
+              };
+            }
+            ::-moz-selection {
+              background: ${
+                mode === 'light'
+                  ? '#007AFF99'
+                  : mode === 'dark'
+                  ? '#c304d199'
+                  : `${customTheme.primary}99`
+              };
+              color: ${
+                mode === 'light'
+                  ? '#1D1D1F'
+                  : mode === 'dark'
+                  ? '#F4F4F5'
+                  : customTheme.textPrimary
+              };
+            }
           `,
         },
         MuiCard: {
